@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ChatGPT Q&A</title>
+</head>
+<body>
+    <h1>ChatGPT Q&A</h1>
+    <input type="text" id="question" placeholder="Enter your question">
+    <button onclick="getAnswer()">Get Answer</button>
+    <div id="answer"></div>
+	<script>
+	async function getAnswer() {
+    const question = document.getElementById('question').value;
+	console.log(question);
+	var url1 = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+	var url2 = 'https://api.openai.com/v1/chat/gpt-3.5-turbo/completions';
+    const response = await fetch(url1, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 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'
+        },
+        body: JSON.stringify({
+            prompt: question,
+            max_tokens: 1000  // Adjust as needed
+        })
+    });
+
+    const data = await response.json();
+	console.log(data);
+    const answer = data.choices[0].text.trim();
+
+    document.getElementById('answer').innerText = answer;
+}
+</script>
+</body>
+</html>
